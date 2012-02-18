@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# chkconfig: - 80 05
+# description: Enable CloudProxy
+#
+
+### BEGIN INIT INFO
+# Provides:          cloudproxy
+# Required-Start:    $all
+# Required-Stop:     $all
+# Short-Description: starts cloudproxy
+# Description:       starts cloudproxy using start-stop-daemon
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+COMMAND=/usr/local/lib/cloudproxy/start-service.sh
+PROCESS=beam.smp
+NAME=cloudproxy
+DESC=cloudproxy
+PID=/usr/local/var/run/cloudproxy/cloudproxy.pid
+
+test -x $COMMAND || exit 1
+
+export HOME=/root
+
+. /etc/init.d/functions
+
+set -e
+
+case "$1" in
+  start)
+    echo "Starting $DESC: "
+	  daemon $COMMAND || true
+	  echo "Done"
+	  ;;
+  stop)
+	  echo "Stopping $DESC: "
+	  killproc -p $PID || true
+	  echo "Done"
+	  ;;
+  restart)
+	  echo "Restarting $DESC: "
+	  killproc -p $PID || true
+	  sleep 1
+	  daemon $COMMAND || true
+	  echo "Done"
+	  ;;
+  *)
+	  echo "Usage: $NAME {start|stop|restart|status}" >&2
+	  exit 1
+	  ;;
+esac
+
+exit 0
