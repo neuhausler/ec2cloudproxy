@@ -21,7 +21,6 @@ cp -r CloudProxy/* /usr/local/lib/cloudproxy
 rm /usr/local/etc/cloudproxy
 
 ln -s -f /usr/local/lib/cloudproxy/priv /usr/local/etc/cloudproxy
-mkdir -p /usr/local/etc/cloudproxy/work
 mkdir -p /usr/local/var/log/cloudproxy
 mkdir -p /usr/local/var/run/cloudproxy
 
